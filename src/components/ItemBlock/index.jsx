@@ -1,28 +1,42 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { faStarHalfAlt, faStar } from '@fortawesome/free-regular-svg-icons';
+import { faStar as faFullStar } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
 
-const index = () => {
+const index = ({ id, title, price, description, category, image, rating }) => {
   return (
     <div className="item-block">
-      <img
-        className="item-block__image"
-        src={'https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg'}
-        alt="item"
-      />
-      <h4 className="item-block__title">Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops</h4>
+      <div className="item-block__image-container">
+        <img className="item-block__image" src={image} alt="item" />
+      </div>
+      <h4 className="item-block__title">{title}</h4>
       <div className="item-block__rating">
         <span>
-          <FontAwesomeIcon icon={faStar} />
-          <FontAwesomeIcon icon={faStar} />
-          <FontAwesomeIcon icon={faStar} />
-          <FontAwesomeIcon icon={faStar} />
-          <FontAwesomeIcon icon={faStar} />
+          <FontAwesomeIcon
+            style={{ color: 'hsl(26, 100%, 55%)' }}
+            icon={rating.rate >= 1 ? faFullStar : rating.rate >= 0.5 ? faStarHalfAlt : faStar}
+          />
+          <FontAwesomeIcon
+            style={{ color: 'hsl(26, 100%, 55%)' }}
+            icon={rating.rate >= 2 ? faFullStar : rating.rate >= 1.5 ? faStarHalfAlt : faStar}
+          />
+          <FontAwesomeIcon
+            style={{ color: 'hsl(26, 100%, 55%)' }}
+            icon={rating.rate >= 3 ? faFullStar : rating.rate >= 2.5 ? faStarHalfAlt : faStar}
+          />
+          <FontAwesomeIcon
+            style={{ color: 'hsl(26, 100%, 55%)' }}
+            icon={rating.rate >= 4 ? faFullStar : rating.rate >= 3.5 ? faStarHalfAlt : faStar}
+          />
+          <FontAwesomeIcon
+            style={{ color: 'hsl(26, 100%, 55%)' }}
+            icon={rating.rate >= 5 ? faFullStar : rating.rate >= 4.5 ? faStarHalfAlt : faStar}
+          />
         </span>
-        <span>250,504</span>
+        <span className="item-block__rating-count">{rating.count}</span>
       </div>
       <div className="item-block__bottom">
-        <div className="item-block__price">109.95 $</div>
+        <div className="item-block__price">{price} $</div>
         <button className="button button--outline button--add">
           <svg
             width="12"
