@@ -1,0 +1,32 @@
+@import '../variables';
+
+.footer {
+  padding: 40px 0;
+
+  .container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__logo {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: font-size 0.15s ease-in-out;
+
+    svg {
+      width: 25px;
+      height: 25px;
+      margin-right: 5px;
+    }
+
+    p {
+      color: $grayish;
+    }
+
+    &:hover {
+      font-size: 18px;
+    }
+  }
+}
