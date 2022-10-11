@@ -3,7 +3,7 @@ import React from 'react';
 const categories = ['All', "Men's clothing", "Women's clothing", 'Jewelery', 'Electronics'];
 
 const Categories = ({ categoryId, onClickCategory }) => {
-  console.log(categoryId);
+
   return (
     <div className="categories">
       <ul>

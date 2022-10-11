@@ -1,19 +1,24 @@
 import React from 'react';
 import logoPng from '../assets/img/logo.png';
+import Search from './Search';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
   return (
     <div className="header">
       <div className="container">
-        <div className="header__logo">
-          <img src={logoPng} alt="logo" />
-          <div>
-            <h1>Fake Shop</h1>
-            <p>Save Money. Live Better.</p>
+        <Link to="/">
+          <div className="header__logo">
+            <img src={logoPng} alt="logo" />
+            <div>
+              <h1>Fake Shop</h1>
+              <p>Save Money. Live Better.</p>
+            </div>
           </div>
-        </div>
+        </Link>
+        <Search />
         <div className="header__cart">
-          <a className="button button--cart">
+          <Link to="/cart" className="button button--cart">
             <span>250 $</span>
             <div className="button__delimiter"></div>
             <svg
@@ -45,7 +50,7 @@ const Header = () => {
               />
             </svg>
             <span>5</span>
-          </a>
+          </Link>
         </div>
       </div>
     </div>

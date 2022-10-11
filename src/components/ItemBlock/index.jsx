@@ -3,7 +3,7 @@ import { faStarHalfAlt, faStar } from '@fortawesome/free-regular-svg-icons';
 import { faStar as faFullStar } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
 
-const index = ({ id, title, price, description, category, image, rating }) => {
+const ItemBlock = ({ id, title, price, description, category, image, rate, count }) => {
   return (
     <div className="item-block">
       <div className="item-block__image-container">
@@ -14,26 +14,26 @@ const index = ({ id, title, price, description, category, image, rating }) => {
         <span>
           <FontAwesomeIcon
             style={{ color: 'hsl(26, 100%, 55%)' }}
-            icon={rating.rate >= 1 ? faFullStar : rating.rate >= 0.5 ? faStarHalfAlt : faStar}
+            icon={rate >= 1 ? faFullStar : rate >= 0.5 ? faStarHalfAlt : faStar}
           />
           <FontAwesomeIcon
             style={{ color: 'hsl(26, 100%, 55%)' }}
-            icon={rating.rate >= 2 ? faFullStar : rating.rate >= 1.5 ? faStarHalfAlt : faStar}
+            icon={rate >= 2 ? faFullStar : rate >= 1.5 ? faStarHalfAlt : faStar}
           />
           <FontAwesomeIcon
             style={{ color: 'hsl(26, 100%, 55%)' }}
-            icon={rating.rate >= 3 ? faFullStar : rating.rate >= 2.5 ? faStarHalfAlt : faStar}
+            icon={rate >= 3 ? faFullStar : rate >= 2.5 ? faStarHalfAlt : faStar}
           />
           <FontAwesomeIcon
             style={{ color: 'hsl(26, 100%, 55%)' }}
-            icon={rating.rate >= 4 ? faFullStar : rating.rate >= 3.5 ? faStarHalfAlt : faStar}
+            icon={rate >= 4 ? faFullStar : rate >= 3.5 ? faStarHalfAlt : faStar}
           />
           <FontAwesomeIcon
             style={{ color: 'hsl(26, 100%, 55%)' }}
-            icon={rating.rate >= 5 ? faFullStar : rating.rate >= 4.5 ? faStarHalfAlt : faStar}
+            icon={rate >= 5 ? faFullStar : rate >= 4.5 ? faStarHalfAlt : faStar}
           />
         </span>
-        <span className="item-block__rating-count">{rating.count}</span>
+        <span className="item-block__rating-count">{count}</span>
       </div>
       <div className="item-block__bottom">
         <div className="item-block__price">{price} $</div>
@@ -57,4 +57,4 @@ const index = ({ id, title, price, description, category, image, rating }) => {
   );
 };
 
-export default index;
+export default ItemBlock;
