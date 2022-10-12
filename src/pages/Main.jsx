@@ -1,19 +1,20 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Categories from '../components/Categories';
 import ItemBlock from '../components/ItemBlock';
 import Pagination from '../components/Pagination';
 import Sort, { sortList } from '../components/Sort';
 import axios from 'axios';
 import Skeleton from '../components/ItemBlock/Skeleton';
-import { SearchContext } from '../App';
+import { useDispatch, useSelector } from 'react-redux';
+import { setCategoryId, setSortType, setCurrentPage } from '../redux/slices/filterSlice';
 
 const Main = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [items, setItems] = useState([]);
-  const [categoryId, setCategoryId] = useState(0);
-  const [sortType, setSortType] = useState(3);
-  const [currentPage, setCurrentPage] = useState(1);
-  const { searchValue } = useContext(SearchContext);
+
+
+  const { categoryId, sortType, currentPage, searchValue } = useSelector((state) => state.filter);
+  const dispatch = useDispatch();
 
   const categoryQuery = categoryId > 0 ? categoryId : '';
   const sortByQuery = sortList[sortType].sortProperty === 'rating' ? 'rate' : 'price';
@@ -46,14 +47,17 @@ const Main = () => {
       <div className="content__top">
         <Categories
           categoryId={categoryId}
-          onClickCategory={(categoryId) => setCategoryId(categoryId)}
+          onClickCategory={(categoryId) => dispatch(setCategoryId(categoryId))}
         />
-        <Sort sortType={sortType} onClickSort={(sortType) => setSortType(sortType)} />
+        <Sort sortType={sortType} onClickSort={(sortType) => dispatch(setSortType(sortType))} />
       </div>
       <h2 className="content__title">Items for sale</h2>
       <div className="content__items">{isLoading ? skeleton : itemCards}</div>
 
-      <Pagination currentPage={currentPage} onPageClick={(page) => setCurrentPage(page)} />
+      <Pagination
+        currentPage={currentPage}
+        onPageClick={(page) => dispatch(setCurrentPage(page))}
+      />
     </div>
   );
 };
