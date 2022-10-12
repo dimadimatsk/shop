@@ -5,7 +5,6 @@ import Cart from './pages/Cart';
 import { Routes, Route } from 'react-router-dom';
 
 import './scss/app.scss';
-import { createContext, useState } from 'react';
 
 
 function App() {
