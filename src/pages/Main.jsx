@@ -11,7 +11,7 @@ import { setCategoryId, setSortType, setCurrentPage } from '../redux/slices/filt
 const Main = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [items, setItems] = useState([]);
-
+  const [pageCount, setPageCount] = useState();
 
   const { categoryId, sortType, currentPage, searchValue } = useSelector((state) => state.filter);
   const dispatch = useDispatch();
@@ -29,7 +29,8 @@ const Main = () => {
       }&limit=8${searchQuery}`,
     );
     setIsLoading(false);
-    setItems(data);
+    setPageCount(Math.ceil(data.totalCount / 8));
+    setItems(data.items);
     window.scrollTo(0, 0);
   };
 
@@ -57,6 +58,7 @@ const Main = () => {
       <Pagination
         currentPage={currentPage}
         onPageClick={(page) => dispatch(setCurrentPage(page))}
+        pageCount={pageCount}
       />
     </div>
   );
