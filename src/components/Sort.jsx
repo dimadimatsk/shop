@@ -3,8 +3,8 @@ import React, { useState } from 'react';
 export const sortList = [
   { name: 'Price: Low to High', sortProperty: 'price', sortOrder: 'asc' },
   { name: 'Price: High to Low', sortProperty: 'price', sortOrder: 'desc' },
-  { name: 'Rating: Low to High', sortProperty: 'rating', sortOrder: 'asc' },
-  { name: 'Rating: High to Low', sortProperty: 'rating', sortOrder: 'desc' },
+  { name: 'Rating: Low to High', sortProperty: 'rate', sortOrder: 'asc' },
+  { name: 'Rating: High to Low', sortProperty: 'rate', sortOrder: 'desc' },
 ];
 
 const Sort = ({sortType, onClickSort}) => {
