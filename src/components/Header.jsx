@@ -2,12 +2,23 @@ import React from 'react';
 import logoPng from '../assets/img/logo.png';
 import Search from './Search';
 import { Link } from 'react-router-dom';
+import { resetFilters } from '../redux/slices/filterSlice';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const toHomePage = () => {
+    dispatch(resetFilters());
+    navigate('/');
+  };
+
   return (
     <div className="header">
       <div className="container">
-        <Link to="/">
+        <Link to="/" onClick={toHomePage}>
           <div className="header__logo">
             <img src={logoPng} alt="logo" />
             <div>

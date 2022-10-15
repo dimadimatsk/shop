@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import qs from 'qs';
 import Categories from '../components/Categories';
 import ItemBlock from '../components/ItemBlock';
 import Pagination from '../components/Pagination';
@@ -13,7 +12,7 @@ import {
   setCurrentPage,
   setFilters,
 } from '../redux/slices/filterSlice';
-import { useNavigate } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 
 const Main = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -22,11 +21,12 @@ const Main = () => {
   const isMounted = useRef(false);
   const isSearch = useRef(false);
 
+  let [searchParams, setSearchParams] = useSearchParams();
+
   const { categoryId, sortType, currentPage, searchValue } = useSelector((state) => state.filter);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
-  const categoryQuery = categoryId > 0 ? categoryId : '';
+  const categoryQuery = categoryId > 0 ? `category=${categoryId}` : '';
   const sortByQuery = sortList[sortType].sortProperty === 'rate' ? 'rate' : 'price';
   const sortOrderQuery = sortList[sortType].sortOrder;
   const searchQuery = searchValue ? `&search=${searchValue}` : '';
@@ -34,7 +34,7 @@ const Main = () => {
   const getItems = async () => {
     setIsLoading(true);
     const { data } = await axios.get(
-      `https://63441194b9ab4243cade8143.mockapi.io/items?category=${categoryQuery}&sortBy=${sortByQuery}&order=${sortOrderQuery}&${
+      `https://63441194b9ab4243cade8143.mockapi.io/items?${categoryQuery}&sortBy=${sortByQuery}&order=${sortOrderQuery}&${
         searchQuery ? '' : `page=${currentPage}`
       }&limit=8${searchQuery}`,
     );
@@ -45,8 +45,21 @@ const Main = () => {
   };
 
   useEffect(() => {
+    if (isMounted.current) {
+      setSearchParams({
+        category: categoryId > 0 ? `${categoryId}` : '',
+        sortBy: sortByQuery,
+        order: sortOrderQuery,
+        page: currentPage,
+      });
+    }
+
+    isMounted.current = true;
+  }, [categoryQuery, sortByQuery, sortOrderQuery, currentPage, searchValue]);
+
+  useEffect(() => {
     if (window.location.search) {
-      const params = qs.parse(window.location.search.substring(1));
+      const params = Object.fromEntries([...searchParams]);
       const sortByParam = sortList.findIndex(
         (obj) =>
           obj.name ===
@@ -57,12 +70,15 @@ const Main = () => {
 
       dispatch(
         setFilters({
-          categoryId: params.category,
+          categoryId: params.category === '' ? 0 : params.category,
           sortType: sortByParam,
           currentPage: params.page,
         }),
       );
-      isSearch.current = true;
+
+      if (window.location.search !== '?category=&sortBy=rate&order=desc&page=1') {
+        isSearch.current = true;
+      }
     }
   }, []);
 
@@ -72,27 +88,12 @@ const Main = () => {
     }
 
     isSearch.current = false;
-  }, [categoryId, sortType, currentPage, searchValue]);
+  }, [categoryQuery, sortByQuery, sortOrderQuery, currentPage, searchValue]);
 
   const itemCards = items
     .filter((obj) => obj['title'].toLowerCase().includes(searchValue.toLowerCase()))
     .map((obj) => <ItemBlock key={obj.id} {...obj} />);
   const skeleton = [...Array(8)].map((_, i) => <Skeleton key={i} />);
-
-  useEffect(() => {
-    if (isMounted.current) {
-      const queryString = qs.stringify({
-        category: categoryQuery,
-        sortBy: sortByQuery,
-        order: sortOrderQuery,
-        page: currentPage,
-      });
-
-      navigate(`?${queryString}`);
-    }
-
-    isMounted.current = true;
-  }, [categoryId, sortType, currentPage]);
 
   return (
     <div className="container">
