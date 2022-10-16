@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 export const sortList = [
   { name: 'Price: Low to High', sortProperty: 'price', sortOrder: 'asc' },
@@ -7,16 +7,30 @@ export const sortList = [
   { name: 'Rating: High to Low', sortProperty: 'rate', sortOrder: 'desc' },
 ];
 
-const Sort = ({sortType, onClickSort}) => {
+const Sort = ({ sortType, onClickSort }) => {
+  const sortRef = useRef();
   const [opened, setOpened] = useState(false);
 
   const showSortPopup = (index) => {
     setOpened(false);
-    onClickSort(index)
+    onClickSort(index);
   };
 
+  useEffect(() => {
+    const handleClickOutsideSort = (e) => {
+      if (!e.path.includes(sortRef.current)) {
+        setOpened(false);
+      }
+    };
+
+    document.body.addEventListener('click', handleClickOutsideSort);
+    return () => {
+      document.body.removeEventListener('click', handleClickOutsideSort);
+    };
+  }, []);
+
   return (
-    <div className="sort">
+    <div ref={sortRef} className="sort">
       <div className="sort__label">
         <svg
           width="10"
