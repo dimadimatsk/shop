@@ -2,8 +2,25 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStarHalfAlt, faStar } from '@fortawesome/free-regular-svg-icons';
 import { faStar as faFullStar } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { plusItem } from '../../redux/slices/cartSlice';
 
 const ItemBlock = ({ id, title, price, description, category, image, rate, count }) => {
+  const dispatch = useDispatch();
+  const cartItem = useSelector((state) => state.cart.items.find((obj) => obj.id === id));
+  const addedItems = cartItem ? cartItem.countCart : 0;
+
+  const onClickAdd = () => {
+    const item = {
+      id,
+      title,
+      price,
+      image,
+      countCart: 0,
+    };
+    dispatch(plusItem(item));
+  };
+
   return (
     <div className="item-block">
       <div className="item-block__image-container">
@@ -37,7 +54,7 @@ const ItemBlock = ({ id, title, price, description, category, image, rate, count
       </div>
       <div className="item-block__bottom">
         <div className="item-block__price">{price} $</div>
-        <button className="button button--outline button--add">
+        <button onClick={onClickAdd} className="button button--outline button--add">
           <svg
             width="12"
             height="12"
@@ -50,7 +67,7 @@ const ItemBlock = ({ id, title, price, description, category, image, rate, count
             />
           </svg>
           <span>Add</span>
-          <i>0</i>
+          <i>{addedItems}</i>
         </button>
       </div>
     </div>

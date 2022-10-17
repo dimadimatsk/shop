@@ -33,10 +33,21 @@
     transform: translateY(1px);
   }
 
+  &--circle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    padding: 0;
+    border-width: 2px;
+  }
+
   &__delimiter {
     width: 1px;
     height: 25px;
-    background-color: rgba(255, 255, 255, 0.25);
+    background-color: $superlightgrayish;
     margin-left: 14px;
     margin-right: 14px;
   }
@@ -59,7 +70,7 @@
   }
 
   &--outline {
-    background-color: #fff;
+    background-color: $white;
     border-color: $orange;
 
     &,
@@ -106,7 +117,7 @@
 
     &:hover {
       i {
-        background-color: #fff;
+        background-color: $white;
         color: $orange;
       }
     }
@@ -115,7 +126,7 @@
       display: inline-block;
       border-radius: 30px;
       background-color: $orange;
-      color: #fff;
+      color: $white;
       font-weight: 600;
       width: 22px;
       height: 22px;

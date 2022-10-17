@@ -60,6 +60,7 @@ const Main = () => {
   useEffect(() => {
     if (window.location.search) {
       const params = Object.fromEntries([...searchParams]);
+      console.log(params);
       const sortByParam = sortList.findIndex(
         (obj) =>
           obj.name ===

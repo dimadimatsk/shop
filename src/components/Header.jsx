@@ -3,12 +3,13 @@ import logoPng from '../assets/img/logo.png';
 import Search from './Search';
 import { Link } from 'react-router-dom';
 import { resetFilters } from '../redux/slices/filterSlice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { items, totalPrice, totalCount } = useSelector((state) => state.cart);
 
   const toHomePage = () => {
     dispatch(resetFilters());
@@ -30,7 +31,7 @@ const Header = () => {
         <Search />
         <div className="header__cart">
           <Link to="/cart" className="button button--cart">
-            <span>250 $</span>
+            <span>{Math.ceil(totalPrice)} $</span>
             <div className="button__delimiter"></div>
             <svg
               width="18"
@@ -60,7 +61,7 @@ const Header = () => {
                 strokeLinejoin="round"
               />
             </svg>
-            <span>5</span>
+            <span>{totalCount}</span>
           </Link>
         </div>
       </div>
