@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
+import errorImg from '../assets/img/error-image.png';
 import Categories from '../components/Categories';
 import ItemBlock from '../components/ItemBlock';
 import Pagination from '../components/Pagination';
 import Sort, { sortList } from '../components/Sort';
-import axios from 'axios';
 import Skeleton from '../components/ItemBlock/Skeleton';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -12,11 +12,10 @@ import {
   setCurrentPage,
   setFilters,
 } from '../redux/slices/filterSlice';
+import { fetchItems } from '../redux/slices/itemSlice';
 import { useSearchParams } from 'react-router-dom';
 
 const Main = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [items, setItems] = useState([]);
   const [pageCount, setPageCount] = useState(3);
   const isMounted = useRef(false);
   const isSearch = useRef(false);
@@ -24,6 +23,7 @@ const Main = () => {
   let [searchParams, setSearchParams] = useSearchParams();
 
   const { categoryId, sortType, currentPage, searchValue } = useSelector((state) => state.filter);
+  const { items, status, totalCount } = useSelector((state) => state.items);
   const dispatch = useDispatch();
 
   const categoryQuery = categoryId > 0 ? `category=${categoryId}` : '';
@@ -32,15 +32,8 @@ const Main = () => {
   const searchQuery = searchValue ? `&search=${searchValue}` : '';
 
   const getItems = async () => {
-    setIsLoading(true);
-    const { data } = await axios.get(
-      `https://63441194b9ab4243cade8143.mockapi.io/items?${categoryQuery}&sortBy=${sortByQuery}&order=${sortOrderQuery}&${
-        searchQuery ? '' : `page=${currentPage}`
-      }&limit=8${searchQuery}`,
-    );
-    setIsLoading(false);
-    setPageCount(Math.ceil(data.totalCount / 8));
-    setItems(data.items);
+    dispatch(fetchItems({ categoryQuery, sortByQuery, sortOrderQuery, currentPage, searchQuery }));
+    setPageCount(Math.ceil(totalCount / 8));
     window.scrollTo(0, 0);
   };
 
@@ -60,7 +53,6 @@ const Main = () => {
   useEffect(() => {
     if (window.location.search) {
       const params = Object.fromEntries([...searchParams]);
-      console.log(params);
       const sortByParam = sortList.findIndex(
         (obj) =>
           obj.name ===
@@ -105,8 +97,18 @@ const Main = () => {
         />
         <Sort sortType={sortType} onClickSort={(sortType) => dispatch(setSortType(sortType))} />
       </div>
-      <h2 className="content__title">Items for sale</h2>
-      <div className="content__items">{isLoading ? skeleton : itemCards}</div>
+      {status === 'error' ? (
+        <div className="content__error-info">
+          <img src={errorImg} alt="error" />
+          <h2>Oops! Something wrong...</h2>
+          <p>Please, try again later.</p>
+        </div>
+      ) : (
+        <>
+          <h2 className="content__title">Items for sale</h2>
+          <div className="content__items">{status === 'loading' ? skeleton : itemCards}</div>
+        </>
+      )}
 
       <Pagination
         currentPage={currentPage}
