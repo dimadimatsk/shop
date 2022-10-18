@@ -6,6 +6,7 @@ import { Routes, Route } from 'react-router-dom';
 
 import './scss/app.scss';
 import FullItem from './pages/FullItem';
+import NotFoundBlock from './components/NotFoundBlock';
 
 function App() {
   return (
@@ -16,7 +17,7 @@ function App() {
           <Route path="/" element={<Main />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/item/:id" element={<FullItem />} />
-          <Route path="*" element={<Main />} />
+          <Route path="*" element={<NotFoundBlock />} />
         </Routes>
       </div>
       <Footer />

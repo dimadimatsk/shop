@@ -31,10 +31,9 @@ body {
       font-size: 32px;
       font-weight: 700;
       margin-bottom: 10px;
-
-      p {
-        font-style: 20px;
-      }
+    }
+    p {
+      font-style: 20px;
     }
   }
 
@@ -173,6 +172,38 @@ body {
       width: 13%;
 
       &-minus {
+        &--disabled {
+          border-color: #cdd8f4;
+
+          svg {
+            path {
+              fill: #cdd8f4;
+            }
+            path:first-of-type {
+              display: none;
+            }
+          }
+
+          &:hover {
+            background-color: $white;
+
+            svg {
+              path {
+                fill: #cdd8f4;
+              }
+            }
+          }
+          &:active {
+            background-color: $white;
+
+            svg {
+              path {
+                fill: #cdd8f4;
+              }
+            }
+          }
+        }
+
         svg {
           path:first-of-type {
             display: none;
