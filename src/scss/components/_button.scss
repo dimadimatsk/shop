@@ -10,7 +10,6 @@
   cursor: pointer;
   transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
   border: 1px solid transparent;
-  height: 46px;
   @include noselect();
 
   &,
@@ -107,6 +106,7 @@
   }
 
   &--add {
+    height: 46px;
     svg {
       margin-right: 10px;
     }
