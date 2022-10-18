@@ -4,6 +4,7 @@ import { faStar as faFullStar } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { plusItem } from '../../redux/slices/cartSlice';
+import { Link } from 'react-router-dom';
 
 const ItemBlock = ({ id, title, price, description, category, image, rate, count }) => {
   const dispatch = useDispatch();
@@ -23,10 +24,12 @@ const ItemBlock = ({ id, title, price, description, category, image, rate, count
 
   return (
     <div className="item-block">
-      <div className="item-block__image-container">
-        <img className="item-block__image" src={image} alt="item" />
-      </div>
-      <h4 className="item-block__title">{title}</h4>
+      <Link to={`/item/${id}`}>
+        <div className="item-block__image-container">
+          <img className="item-block__image" src={image} alt="item" />
+        </div>
+        <h4 className="item-block__title">{title}</h4>
+      </Link>
       <div className="item-block__rating">
         <span>
           <FontAwesomeIcon
@@ -67,7 +70,7 @@ const ItemBlock = ({ id, title, price, description, category, image, rate, count
             />
           </svg>
           <span>Add</span>
-          <i>{addedItems}</i>
+          {addedItems > 0 && <i>{addedItems}</i>}
         </button>
       </div>
     </div>

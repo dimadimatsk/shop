@@ -5,21 +5,21 @@ import Cart from './pages/Cart';
 import { Routes, Route } from 'react-router-dom';
 
 import './scss/app.scss';
-
+import FullItem from './pages/FullItem';
 
 function App() {
-
   return (
     <div className="wrapper">
-        <Header />
-        <div className="content">
-          <Routes>
-            <Route path="/" element={<Main />} />
-            <Route path="/cart" element={<Cart />} />
-            <Route path="*" element={<Main />} />
-          </Routes>
-        </div>
-        <Footer />
+      <Header />
+      <div className="content">
+        <Routes>
+          <Route path="/" element={<Main />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/item/:id" element={<FullItem />} />
+          <Route path="*" element={<Main />} />
+        </Routes>
+      </div>
+      <Footer />
     </div>
   );
 }

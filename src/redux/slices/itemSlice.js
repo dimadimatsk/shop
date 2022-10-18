@@ -19,7 +19,7 @@ const initialState = {
 };
 
 const itemSlice = createSlice({
-  name: 'items',
+  name: 'item',
   initialState,
   reducers: {
     setItems(state, action) {
