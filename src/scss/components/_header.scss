@@ -6,6 +6,7 @@
 
   &__cart {
     width: 180px;
+    grid-area: cart;
   }
 
   .container {
@@ -33,6 +34,62 @@
 
     p {
       color: $grayish;
+    }
+  }
+
+  @media (max-width: 1100px) {
+    padding-bottom: 10px;
+    .container {
+      display: grid;
+      grid-template-areas:
+        'logo cart'
+        'search search';
+
+      a {
+        grid-area: logo;
+      }
+    }
+  }
+
+  @media (max-width: 720px) {
+    &__cart {
+      width: 100px;
+
+      .button {
+        padding: 5px 5px;
+        span:first-child {
+          display: none;
+        }
+
+        &__delimiter {
+          display: none;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 530px) {
+    &__logo {
+      img {
+        margin-right: 0;
+      }
+      div {
+        display: flex;
+        align-items: center;
+
+        h1 {
+          display: flex;
+          font-size: 16px;
+        }
+
+        p {
+          display: none;
+        }
+      }
+    }
+
+    &__cart {
+      
     }
   }
 }

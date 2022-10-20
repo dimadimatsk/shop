@@ -3,6 +3,9 @@
 .categories {
   ul {
     display: flex;
+    flex-wrap: wrap;
+    row-gap: 10px;
+    justify-content: center;
 
     li {
       background-color: $buttonslight;

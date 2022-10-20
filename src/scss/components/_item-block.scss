@@ -85,4 +85,12 @@
     line-height: 27px;
     letter-spacing: 0.015em;
   }
+
+  
+  @media (max-width: 470px) {
+    width: 250px;
+    &__title {
+      font-size: 14px;
+    }
+  }
 }
