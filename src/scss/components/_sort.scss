@@ -9,6 +9,15 @@
 
     svg {
       margin-right: 8px;
+      transform: rotate(90deg);
+    }
+
+    .asc {
+      transform: rotate(0deg);
+    }
+
+    .desc {
+      transform: rotate(180deg);
     }
 
     b {
